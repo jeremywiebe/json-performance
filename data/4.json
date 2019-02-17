@@ -1,0 +1,101 @@
+{
+  "method": "update",
+  "params": {
+    "update": {
+      "ops": [
+        { "n": 66, "op": "invalidate" },
+        { "n": 66, "op": "skip" },
+        { "n": 62, "op": "copy" },
+        { "n": 46, "op": "invalidate" },
+        {
+          "lines": [
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "styles": [0, 28, 8], "text": "asdfsdf a;sldfj asd;lfj asd\n" },
+            {
+              "styles": [0, 39, 8],
+              "text": "f as;ldfkj a;sdlfjk a;oeiuw s;ldkj asd\n"
+            },
+            { "styles": [0, 22, 8], "text": "fas;elfiaj we;lajsd f\n" },
+            { "cursor": [4], "styles": [0, 4, 8], "text": "asdf" }
+          ],
+          "n": 41,
+          "op": "ins"
+        }
+      ],
+      "pristine": false
+    },
+    "view_id": "view-id-2"
+  }
+}

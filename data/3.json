@@ -1,0 +1,22 @@
+{
+  "method": "config_changed",
+  "params": {
+    "changes": {
+      "auto_indent": true,
+      "autodetect_whitespace": true,
+      "font_face": "Hasklig",
+      "font_size": 13,
+      "line_ending": "\n",
+      "plugin_search_path": [],
+      "scroll_past_end": true,
+      "surrounding_pairs": [["\"", "\""], ["'", "'"], ["{", "}"], ["[", "]"]],
+      "tab_size": 4,
+      "translate_tabs_to_spaces": true,
+      "unified_toolbar": true,
+      "use_tab_stops": true,
+      "word_wrap": false,
+      "wrap_width": 80
+    },
+    "view_id": "view-id-2"
+  }
+}

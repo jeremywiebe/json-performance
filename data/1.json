@@ -1,0 +1,8 @@
+{
+  "method": "edit",
+  "params": {
+    "method": "resize",
+    "params": { "height": 665, "width": 613 },
+    "view_id": "view-id-2"
+  }
+}

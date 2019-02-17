@@ -1,0 +1,7 @@
+{
+  "method": "available_plugins",
+  "params": {
+	  "plugins": [],
+	  "view_id": "view-id-2"
+  }
+}

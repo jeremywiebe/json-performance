@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3F4389D72212A5E600B0DBA9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4389D62212A5E600B0DBA9 /* main.swift */; };
+		3F4389E12212A64400B0DBA9 /* JsonCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4389DF2212A64400B0DBA9 /* JsonCodable.swift */; };
+		3F4389E22212A64400B0DBA9 /* JSONSerializationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4389E02212A64400B0DBA9 /* JSONSerializationTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		3F4389D32212A5E600B0DBA9 /* json-performance */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "json-performance"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4389D62212A5E600B0DBA9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		3F4389DD2212A63500B0DBA9 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		3F4389DF2212A64400B0DBA9 /* JsonCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCodable.swift; sourceTree = "<group>"; };
+		3F4389E02212A64400B0DBA9 /* JSONSerializationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializationTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +46,7 @@
 		3F4389CA2212A5E600B0DBA9 = {
 			isa = PBXGroup;
 			children = (
+				3F4389DD2212A63500B0DBA9 /* data */,
 				3F4389D52212A5E600B0DBA9 /* json-performance */,
 				3F4389D42212A5E600B0DBA9 /* Products */,
 			);
@@ -57,9 +63,19 @@
 		3F4389D52212A5E600B0DBA9 /* json-performance */ = {
 			isa = PBXGroup;
 			children = (
+				3F4389DE2212A64400B0DBA9 /* tests */,
 				3F4389D62212A5E600B0DBA9 /* main.swift */,
 			);
 			path = "json-performance";
+			sourceTree = "<group>";
+		};
+		3F4389DE2212A64400B0DBA9 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				3F4389DF2212A64400B0DBA9 /* JsonCodable.swift */,
+				3F4389E02212A64400B0DBA9 /* JSONSerializationTest.swift */,
+			);
+			path = tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +135,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F4389E12212A64400B0DBA9 /* JsonCodable.swift in Sources */,
 				3F4389D72212A5E600B0DBA9 /* main.swift in Sources */,
+				3F4389E22212A64400B0DBA9 /* JSONSerializationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +265,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7R475PJ7ZQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_FORCE_STATIC_LINK_STDLIB = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -257,6 +276,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7R475PJ7ZQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_FORCE_STATIC_LINK_STDLIB = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
