@@ -81,6 +81,7 @@ enum Operation {
 
 enum EditOperation {
 	case resize(EditResizeParams)
+	case paste(EditPasteParams)
 }
 
 extension EditOperation: Codable {
@@ -94,6 +95,8 @@ extension EditOperation: Codable {
 		switch (try container.decode(String.self, forKey: .method)) {
 		case "resize":
 			self = .resize(try container.decode(EditResizeParams.self, forKey: .params))
+		case "paste":
+			self = .paste(try container.decode(EditPasteParams.self, forKey: .params))
 		default:
 			throw DecodeError()
 		}
@@ -105,6 +108,9 @@ extension EditOperation: Codable {
 		case .resize(let params):
 			try container.encode("resize", forKey: .method)
 			try container.encode(params, forKey: .params)
+		case .paste(let params):
+			try container.encode("paste", forKey: .method)
+			try container.encode(params, forKey: .params)
 		}
 	}
 }
@@ -112,6 +118,10 @@ extension EditOperation: Codable {
 struct EditResizeParams: Codable {
 	let height: Int
 	let width: Int
+}
+
+struct EditPasteParams: Codable {
+	let chars: String
 }
 
 struct AvailablePluginParams: Codable {
@@ -163,7 +173,6 @@ extension UpdateOperation: Codable {
 
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		let superEncoder = try container.superDecoder()
 
 		let m = try container.decode(String.self, forKey: .op)
 		let n = try container.decode(Int.self, forKey: .n)
@@ -176,7 +185,7 @@ extension UpdateOperation: Codable {
 		case "copy":
 			self = .Copy(CopyParams.init(n: n))
 		case "ins":
-			self = .Insert(try InsertParams.init(from: superEncoder))
+			self = .Insert(try InsertParams.init(from: decoder))
 		default:
 			print("Did not handle decoding from operation: \(m)")
 			throw DecodeError()
