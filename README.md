@@ -12,6 +12,7 @@ On my laptop (MacBook Pro 2017 - 2.8 GHz Intel Core i7) I get these results.
 
 # 1 iteration
 
+```
 Test: JSONSerialization..........
 
   == Serializing... ==============================================
@@ -43,9 +44,11 @@ Test: Codable..........
   3.json (559 bytes)                             0.67 MB/s
   4.json (4195 bytes)                            2.59 MB/s
   5-paste-whole-file:send.json (15850 bytes)    41.88 MB/s
+```
 
 # 100,000 iterations
 
+```
 Test: JSONSerialization..........
 
   == Serializing... ==============================================
@@ -77,3 +80,4 @@ Test: Codable..........
   3.json (559 bytes)                             2.56 MB/s
   4.json (4195 bytes)                            4.21 MB/s
   5-paste-whole-file:send.json (15850 bytes)   120.89 MB/s
+```
