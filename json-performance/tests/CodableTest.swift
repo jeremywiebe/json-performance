@@ -235,7 +235,7 @@ struct Line: Codable {
 	let text: String
 }
 
-class JsonCodableTest: JsonTest {
+class CodableTest: JsonTest {
 	let decoder = JSONDecoder()
 	let encoder = JSONEncoder()
 

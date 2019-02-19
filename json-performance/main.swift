@@ -9,18 +9,10 @@
 import Foundation
 import Darwin
 
-let DEFAULT_ITERATIONS = 100_000
+let DEFAULT_ITERATIONS = UInt64(100_000)
 
 protocol Init {
 	init()
-}
-
-enum TestData: String {
-	case One = "1.json"
-	case Two = "2.json"
-	case Three = "3.json"
-	case Four = "4.json"
-	case Five = "5-paste-whole-file:send.json"
 }
 
 protocol JsonTest: class, Init {
@@ -30,7 +22,7 @@ protocol JsonTest: class, Init {
 
 let tests: [JsonTest.Type] = [
 	JSONSerializationTest.self,
-	JsonCodableTest.self
+	CodableTest.self
 ]
 
 let arguments = Array(ProcessInfo.processInfo.arguments.dropFirst())
@@ -43,14 +35,14 @@ if (arguments.count < 1 || arguments.count > 2) {
 }
 
 let dataDirectory: String = arguments[0]
-let iterations: Int = arguments.count == 2 ? Int(arguments[1])! : DEFAULT_ITERATIONS
+let iterations: UInt64 = arguments.count == 2 ? UInt64(arguments[1])! : DEFAULT_ITERATIONS
 
 let fm = FileManager()
 
 struct TestFileTiming {
 	let path: String
 	let fileSize: UInt64
-	let timings: [dispatch_time_t]
+	let timings: [UInt64]
 }
 
 typealias TestTiming = [String: [TestFileTiming]]
@@ -65,49 +57,58 @@ func calculate(description: String, testTiming: TestTiming) {
 	for (_, timings) in testTiming {
 
 		for fileTiming in timings {
-			var minNS: UInt64 = 0, maxNS: UInt64 = 0
-
 			let totalTimeNS = UInt64(fileTiming.timings.reduce(
 				UInt64(0),
-				{ result, t in
-					minNS = min(minNS, t)
-					maxNS = max(maxNS, t)
-					return result + t
-				}
-			)) - maxNS - minNS
+				{ result, t in result + t }
+			))
 
-			let effectiveIterations = UInt64(iterations - 2)
-
-			let mb = (Double(effectiveIterations * fileTiming.fileSize) / Double(1024) / Double(1024))
+			let mb = (Double(iterations * fileTiming.fileSize) / Double(1024) / Double(1024))
 			let totalTimeInSeconds = Double(totalTimeNS) / Double(1e9)
 			let throughputInMbps = mb / Double(totalTimeInSeconds)
 
 			let header = "\(fileTiming.path) (\(fileTiming.fileSize) bytes)"
 			
 			let formattedMbps = String(format: "%.2f", throughputInMbps)
-			let padding = String(repeating: " ", count: 54 - header.count - formattedMbps.count)
+			let padding = String(repeating: " ", count: 50 - header.count - formattedMbps.count)
 			let paddedMbps = padding + formattedMbps
 
-			print("\(header) \(paddedMbps) MB/s")
+			print("  \(header) \(paddedMbps) MB/s")
 		}
 
 		print()
 	}
 }
 
+func measureBlock(_ block: () -> Any) -> [UInt64] {
+	var timings: [UInt64] = []
+	for _ in 0..<iterations  {
+		var timer = Timer()
+		timer.start()
+		let _ = block()
+		timer.stop()
 
+		timings.append(timer.nanoseconds)
+	}
+
+	return timings
+}
+
+
+let formatter = NumberFormatter()
+formatter.numberStyle = .decimal
+print("Running tests with \(formatter.string(from: NSNumber(value: iterations))!) iterations")
+print()
 for testClass in tests {
-	// Keyed by: Test Type
-	var allTimings = Timings(serialize: [:], deserialize: [:])
+	let testDescription = String(describing: testClass)
+		.replacingOccurrences(of: "Test", with: "")
 
-	let testDescription = String(describing: testClass).replacingOccurrences(of: "Test", with: "")
+	var allTimings = Timings(serialize: [:], deserialize: [:])
 	allTimings.deserialize[testDescription] = []
 	allTimings.serialize[testDescription] = []
 
 	print("Test: \(testDescription)", terminator: "")
 
 	let tester = testClass.init()
-
 	for dataFile in try! fm.contentsOfDirectory(atPath: dataDirectory).sorted() {
 		let jsonFilePath = URL(fileURLWithPath: dataDirectory).appendingPathComponent(dataFile)
 
@@ -120,32 +121,22 @@ for testClass in tests {
 		)
 
 		print(".", terminator: "")
-		var t: [dispatch_time_t] = []
-		for _ in 0..<iterations  {
-			var timer = Timer()
-			timer.start()
-			let _ = tester.deserialize(data: data)
-			timer.stop()
-
-			t.append(timer.nanoseconds)
-		}
 		allTimings.deserialize[testDescription]?.append(
-			TestFileTiming(path: dataFile, fileSize: fileSize, timings: t)
+			TestFileTiming(
+				path: dataFile,
+				fileSize: fileSize,
+				timings: measureBlock { tester.deserialize(data: data) }
+			)
 		)
 
 		print(".", terminator: "")
 		let objToSerialize = tester.deserialize(data: data)
-		t = []
-		for _ in 0..<iterations {
-			var timer = Timer()
-			timer.start()
-			let _ = tester.serialize(json: objToSerialize)
-			timer.stop()
-
-			t.append(timer.nanoseconds)
-		}
 		allTimings.serialize[testDescription]?.append(
-			TestFileTiming(path: dataFile, fileSize: fileSize, timings: t)
+			TestFileTiming(
+				path: dataFile,
+				fileSize: fileSize,
+				timings: measureBlock { tester.serialize(json: objToSerialize) }
+			)
 		)
 	}
 	print()
@@ -153,7 +144,4 @@ for testClass in tests {
 
 	calculate(description: "Serializing...", testTiming: allTimings.serialize)
 	calculate(description: "Deserializing...", testTiming: allTimings.deserialize)
-
-	print()
-	print()
 }
