@@ -16,8 +16,8 @@ protocol Init {
 }
 
 protocol JsonTest: class, Init {
-	func deserialize(data: Data) -> Any
-	func serialize(json: Any) -> Data
+	func deserialize(data: Data) -> Message
+	func serialize(message: Message) -> Data
 }
 
 let tests: [JsonTest.Type] = [
@@ -115,7 +115,6 @@ for testClass in tests {
 		let attr = try fm.attributesOfItem(atPath: jsonFilePath.path)
 		let fileSize = NSDictionary(dictionary: attr).fileSize()
 
-
 		let data = try! Data(
 			contentsOf: jsonFilePath
 		)
@@ -135,7 +134,7 @@ for testClass in tests {
 			TestFileTiming(
 				path: dataFile,
 				fileSize: fileSize,
-				timings: measureBlock { tester.serialize(json: objToSerialize) }
+				timings: measureBlock { tester.serialize(message: objToSerialize) }
 			)
 		)
 	}

@@ -24,7 +24,9 @@ struct Message: Codable {
 
 	let viewId: String
 	let operation: Operation
+}
 
+extension Message {
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -243,21 +245,16 @@ class CodableTest: JsonTest {
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
 	}
 
-	func deserialize(data: Data) -> Any {
+	func deserialize(data: Data) -> Message {
 		do {
 			return try decoder.decode(Message.self, from: data)
 		} catch {
 			print("Error!!! \(error)" )
 		}
-
-		return ""
+		return try! decoder.decode(Message.self, from: "{}".data(using: .utf8)!)
 	}
 
-	func serialize(json: Any) -> Data {
-		if let message = json as? Message {
-			return try! encoder.encode(message)
-		}
-
-		return Data(count: 0)
+	func serialize(message: Message) -> Data {
+		return try! encoder.encode(message)
 	}
 }
