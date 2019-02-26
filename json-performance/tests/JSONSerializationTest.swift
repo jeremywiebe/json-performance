@@ -17,7 +17,7 @@ class JSONSerializationTest: JsonTest {
 
 	func serialize(message: Message) -> Data {
 		return try! JSONSerialization.data(withJSONObject: message.toJson(),
-										   options: [])
+										   options: [.prettyPrinted])
 	}
 }
 
@@ -52,7 +52,6 @@ extension Message {
 		var json: [String: Any] = [:]
 
 		var jsonParams = [String: Any]()
-		json["params"] = jsonParams
 		jsonParams["view_id"] = self.viewId
 
 		switch self.operation {
@@ -60,7 +59,6 @@ extension Message {
 			json["method"] = "edit"
 
 			var editParams = [String: Any]()
-			jsonParams["params"] = editParams
 
 			switch op {
 			case let .paste(params):
@@ -73,6 +71,8 @@ extension Message {
 				editParams["width"] = params.width
 			}
 
+			jsonParams["params"] = editParams
+
 		case let .availablePlugins(params):
 			json["method"] = "available_plugins"
 			jsonParams["plugins"] = params.plugins
@@ -80,7 +80,6 @@ extension Message {
 		case let .configChanged(params):
 			json["method"] = "config_changed"
 			var changes = [String: Any]()
-			jsonParams["changes"] = changes
 			changes["auto_indent"] = params.changes.autoIndent
 			changes["autodetect_whitespace"] = params.changes.autodetectWhitespace
 			changes["font_face"] = params.changes.fontFace
@@ -95,13 +94,13 @@ extension Message {
 			changes["use_tab_stops"] = params.changes.useTabStops
 			changes["word_wrap"] = params.changes.wordWrap
 			changes["wrap_width"] = params.changes.wrapWidth
+			jsonParams["changes"] = changes
 
 		case let .update(params):
 			json["method"] = "update"
-			var update = [String: Any]()
-			jsonParams["update"] = update
 
-			let ops = params.update.ops.map { op in
+			var update = [String: Any]()
+			update["ops"] = params.update.ops.map { op -> [String: Any] in
 				var opJson = [String: Any]()
 				switch op {
 				case let .Copy(params):
@@ -111,12 +110,12 @@ extension Message {
 				case let .Insert(params):
 					opJson["op"] = "ins"
 					opJson["n"] = params.n
-					let lines = params.lines.map { line in
-						var l = [String: Any]()
-						l["styles"] = line.styles
-						l["text"] = line.text
+					opJson["lines"] = params.lines.map { line -> [String: Any] in
+						var lineJson = [String: Any]()
+						lineJson["styles"] = line.styles
+						lineJson["text"] = line.text
+						return lineJson
 					}
-					opJson["lines"] = lines
 
 				case let .Invalidate(params):
 					opJson["op"] = "invalidate"
@@ -126,9 +125,14 @@ extension Message {
 					opJson["op"] = "skip"
 					opJson["n"] = params.n
 				}
+
+				return opJson
 			}
-			update["ops"] = ops
+
+			jsonParams["update"] = update
 		}
+
+		json["params"] = jsonParams
 
 		return json
 	}
